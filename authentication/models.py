@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.db.models.fields.related import ForeignKey
 
 
 # Create your models here.
@@ -54,3 +55,4 @@ class User(AbstractBaseUser, PermissionsMixin):
             'refresh': str(jwt_token),
             'access': str(jwt_token.access_token)
         }
+

@@ -23,19 +23,19 @@ from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
-        title='APP Gastos',
+        title='APP e-commerce',
         default_version='v1',
-        description='Aplicación que nos ayudara a manejar nuestros gastos e ingresos',
-        contact=openapi.Contact(email='D19298@idat.edu.pe')
+        description='Aplicacion para la venta de cursos on-line',
+        contact=openapi.Contact(email='backend@idat.com.pe')
     ),
     public=True,
     permission_classes=(permissions.AllowAny,)
 )
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authentication.urls')),
+    path('app/', include('app.urls')),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc')
 ]

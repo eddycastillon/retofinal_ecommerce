@@ -1,12 +1,13 @@
+from django.db.models import query
 from django.shortcuts import render
-from rest_framework import generics, status, views, permissions
+from rest_framework import generics, status, views, permissions, viewsets
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.urls import reverse_lazy
 from drf_yasg.openapi import Parameter, IN_QUERY, TYPE_STRING
 from drf_yasg.utils import swagger_auto_schema
-from .serializers import RegisterSerializer, EmailVerifySerializer, LoginSerializer, LogoutSerializer
-from .models import User
+from .serializers import  RegisterSerializer, EmailVerifySerializer, LoginSerializer, LogoutSerializer
+from .models import  User
 from .helpers import send_email
 from os import environ
 from jwt import decode, ExpiredSignatureError, DecodeError
@@ -96,3 +97,5 @@ class LogoutView(generics.GenericAPIView):
         return Response({
             'success': 'Se cerro la sesión'
         }, status=status.HTTP_200_OK)
+
+
