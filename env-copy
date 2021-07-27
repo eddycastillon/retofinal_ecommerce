@@ -1,0 +1,16 @@
+DJANGO_SETTINGS_MODULE='backend.settings'
+DJANGO_HOST='127.0.0.1'
+DJANGO_PORT=8001
+SECRET_KEY='django-insecure-$1n6if42d5z476u&_)!udb9o*9eh2a&d64xl1*ihp@%+8%b44w'
+DEBUG=True
+
+DB_NAME='db_ecommerce'
+DB_USER='postgres'
+DB_PASS='!!Admin456!!'
+DB_HOST='127.0.0.1'
+DB_PORT='5432'
+
+TIMEZONE='America/Lima'
+
+EMAIL_USER='pachaqtecbackend@gmail.com'
+EMAIL_PASS='ueejybpdpfpkrxlv'
