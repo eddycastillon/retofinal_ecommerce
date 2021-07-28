@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from os import environ
 from datetime import timedelta
+import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -93,7 +95,8 @@ DATABASES = {
         'PORT': environ.get('DB_PORT'),
     }
 }
-
+db_from_env  = dj_database_url.config()
+DATABASES['default'].update()
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -171,3 +174,8 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+
+#Heroku
+
+django_heroku.settings(locals())
