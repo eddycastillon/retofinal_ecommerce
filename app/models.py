@@ -73,3 +73,37 @@ class HorarioCurso(models.Model):
         verbose_name_plural = 'Horario de Cursos'
         ordering = ['id']
 
+
+class Sesion(models.Model):
+    id = models.AutoField(primary_key=True)
+    sesion = models.CharField(max_length=255)
+    id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.sesion}'
+
+    class Meta:
+        db_table = 'sesiones'
+        verbose_name = 'Sesion'
+        verbose_name_plural = 'Sesiones'
+        ordering = ['sesion']
+
+
+class Semana(models.Model):
+    id = models.AutoField(primary_key=True)
+    id_sesion = models.ForeignKey(Sesion, on_delete=models.CASCADE)
+    semana = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=255)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.semana}'
+    
+    class Meta:
+        db_table = 'semanas'
+        verbose_name = 'Semana'
+        verbose_name_plural = 'Semanas'
+        ordering = ['semana']
