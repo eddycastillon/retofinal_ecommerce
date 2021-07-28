@@ -1,3 +1,4 @@
+#example
 DJANGO_SETTINGS_MODULE='backend.settings'
 DJANGO_HOST='127.0.0.1'
 DJANGO_PORT=8001
