@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import AutoField
 from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
@@ -8,7 +9,7 @@ class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
     categoria = models.CharField(max_length=255)
     create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.categoria}'
@@ -26,8 +27,9 @@ class Curso(models.Model):
     duracion = models.IntegerField()
     precio = models.DecimalField(decimal_places=2, max_digits=5)
     id_categoria = ForeignKey(Categoria, on_delete=models.CASCADE)
+    url = models.CharField(max_length=255, null=True)
     create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.curso}'
@@ -45,7 +47,7 @@ class Horario(models.Model):
     horaInicio = models.CharField(max_length=12)
     horaFin = models.CharField(max_length=12)
     create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.frecuencia} {self.horaInicio} - {self.horaFin}'
@@ -62,7 +64,7 @@ class HorarioCurso(models.Model):
     id_horario = models.ForeignKey(Horario, on_delete=models.CASCADE)
     id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.id_horario}-{self.id_curso}'
@@ -77,9 +79,8 @@ class HorarioCurso(models.Model):
 class Sesion(models.Model):
     id = models.AutoField(primary_key=True)
     sesion = models.CharField(max_length=255)
-    id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.sesion}'
@@ -91,13 +92,29 @@ class Sesion(models.Model):
         ordering = ['sesion']
 
 
+class SesionCurso(models.Model):
+    id = models.AutoField(primary_key=True)
+    id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    id_sesion = models.ForeignKey(Sesion, on_delete=models.CASCADE)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.id_curso} - {self.id_sesion}'
+    
+    class Meta:
+        db_table = 'sesion_cursos'
+        verbose_name = 'Sesion de Curso'
+        verbose_name_plural = 'Sesion de Cursos'
+
+
 class Semana(models.Model):
     id = models.AutoField(primary_key=True)
-    id_sesion = models.ForeignKey(Sesion, on_delete=models.CASCADE)
+    id_sesioncurso = models.ForeignKey(SesionCurso, on_delete=models.CASCADE, null=True)
     semana = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=255)
     create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.semana}'
@@ -107,3 +124,37 @@ class Semana(models.Model):
         verbose_name = 'Semana'
         verbose_name_plural = 'Semanas'
         ordering = ['semana']
+
+
+
+class Beneficio(models.Model):
+    id = models.AutoField(primary_key=True)
+    beneficio = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.beneficio}'
+
+    class Meta:
+        db_table = 'beneficios'
+        verbose_name = 'Beneficio'
+        verbose_name_plural = 'Beneficios'
+        ordering = ['id']
+
+
+class CursoBeneficio(models.Model):
+    id = models.AutoField(primary_key=True)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    beneficio = models.ForeignKey(Beneficio, on_delete=models.CASCADE)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.id}'
+
+    class Meta:
+        db_table = 'curso_beneficios'
+        verbose_name = 'Curso - Beneficio'
+        verbose_name_plural = 'Curso - Beneficios'
+        ordering = ['id']

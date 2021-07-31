@@ -1,0 +1,12 @@
+
+QUERY PARA RETORNAR LOS CURSOS, CATEGORIA, SESION Y SEMANAS CON SU RESPECTIVA DESCRIPCION
+
+select cour.curso, cat.categoria, sn.sesion, sem.semana, sem.descripcion from courses as cour
+inner join categories as cat
+on cour.id_categoria_id = cat.id
+inner join sesion_cursos as ses
+on ses.id_curso_id = cour.id
+inner join sesiones as sn
+on sn.id = ses.id_sesion_id
+inner join semanas as sem
+on sem.id_SesionCurso_id = ses.id

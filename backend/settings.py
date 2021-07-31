@@ -29,6 +29,18 @@ DEBUG = environ.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
+#CORS_ALLOWED_ORIGINS = [
+#    'http://localhost:4200'
+#]
+#
+#
+
+
+#CORS_ORIGIN_ALLOW_ALL=True
+
+#CORS_ORIGIN_WHITELIST = [
+#    'http://localhost:4200'
+#]
 
 # Application definition
 
@@ -41,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+#    'corsheaders',
     'drf_yasg',
     'authentication',
     'app'
@@ -58,6 +71,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+
 
 ROOT_URLCONF = 'backend.urls'
 
