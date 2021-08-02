@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
-from os import environ
+from os import environ, path
 from datetime import timedelta
 import dj_database_url
 import django_heroku
@@ -201,3 +202,7 @@ django_heroku.settings(locals())
 
 #CORS
 CORS_ALLOW_ALL_ORIGINS  = True
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT= os.path.join(BASE_DIR, "media")
