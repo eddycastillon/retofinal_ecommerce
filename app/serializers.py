@@ -1,6 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Beneficio, Categoria, Curso, CursoBeneficio, Horario, HorarioCurso, Semana, Sesion, SesionCurso
+from .models import Beneficio, Categoria, Curso, Horario, HorarioCurso, Semana, Sesion, SesionCurso
 
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -68,12 +68,4 @@ class BeneficioSerializer(serializers.ModelSerializer):
         model = Beneficio
         fields = ['id', 'beneficio']
 
-class CursoBeneficioSerialzer(serializers.ModelSerializer):
-
-    curso = CursoSerializer(many=False)
-    beneficio = BeneficioSerializer(many=False)
-
-    class Meta:
-        model = CursoBeneficio
-        fields = ['id', 'curso', 'beneficio']
 

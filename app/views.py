@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import Beneficio, Categoria, Curso, CursoBeneficio, Semana, Sesion, Horario, HorarioCurso, SesionCurso
-from .serializers import BeneficioSerializer, CategoriaSerializer, CursoBeneficioSerialzer, CursoSerializer, SemanaSerializer, SesionSerializer, HorarioSerializer, HorarioCursoSerializer, SesionCursoSerializer
+from .models import Beneficio, Categoria, Curso, Semana, Sesion, Horario, HorarioCurso, SesionCurso
+from .serializers import BeneficioSerializer, CategoriaSerializer, CursoSerializer, SemanaSerializer, SesionSerializer, HorarioSerializer, HorarioCursoSerializer, SesionCursoSerializer
 
 # Create your views here.
 
@@ -36,7 +36,3 @@ class HorarioCursoViewSet(viewsets.ModelViewSet):
 class BeneficioViewSet(viewsets.ModelViewSet):
     queryset = Beneficio.objects.all()
     serializer_class = BeneficioSerializer
-
-class CursoBeneficioViewSet(viewsets.ModelViewSet):
-    queryset = CursoBeneficio.objects.all()
-    serializer_class = CursoBeneficioSerialzer

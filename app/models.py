@@ -143,18 +143,4 @@ class Beneficio(models.Model):
         ordering = ['id']
 
 
-class CursoBeneficio(models.Model):
-    id = models.AutoField(primary_key=True)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
-    beneficio = models.ForeignKey(Beneficio, on_delete=models.CASCADE)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f'{self.id}'
-
-    class Meta:
-        db_table = 'curso_beneficios'
-        verbose_name = 'Curso - Beneficio'
-        verbose_name_plural = 'Curso - Beneficios'
-        ordering = ['id']
