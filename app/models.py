@@ -4,7 +4,6 @@ from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
 
-
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
     categoria = models.CharField(max_length=255)
