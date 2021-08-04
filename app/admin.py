@@ -1,6 +1,7 @@
 from re import search
 from django.contrib import admin
-from .models import Beneficio, Categoria, Curso, Sesion, SesionCurso, Semana, Horario, HorarioCurso
+from .models import Beneficio, Categoria, Curso, Sesion, SesionCurso, Semana, Horario, HorarioCurso,\
+    Interesado, Descuento
 # Register your models here.
 
 
@@ -40,3 +41,11 @@ class HorarioCursoAdmin(admin.ModelAdmin):
 @admin.register(Beneficio)
 class BeneficioAdmin(admin.ModelAdmin):
     list_display = ['id', 'beneficio']
+
+@admin.register(Descuento)
+class DescuentoAdmin(admin.ModelAdmin):
+    list_display = ['id', 'codigo', 'status', 'interesado_id' ]
+
+@admin.register(Interesado)
+class InteresadoAdmin(admin.ModelAdmin):
+    list_display = ['id','nombres', 'apellido_paterno', 'apellido_materno', 'celular', 'email' ]
