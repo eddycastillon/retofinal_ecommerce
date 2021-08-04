@@ -1,6 +1,10 @@
+from rest_framework.fields import ReadOnlyField
+import shortuuid
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Beneficio, Categoria, Curso, Horario, HorarioCurso, Semana, Sesion, SesionCurso
+from .models import Beneficio, Categoria, Curso, Descuento, Horario, HorarioCurso, Interesado, Semana, Sesion, SesionCurso, \
+     Interesado, Descuento
+
 
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -68,4 +72,23 @@ class BeneficioSerializer(serializers.ModelSerializer):
         model = Beneficio
         fields = ['id', 'beneficio']
 
+class InteresadoSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Interesado
+        fields = ['id', 'nombres', 'apellido_paterno', 'apellido_materno', 'celular', 'email']
 
+class DescuentoSerializer(serializers.ModelSerializer):
+    
+    interesado_id = InteresadoSerializer(many=False)
+
+    class Meta:
+        model = Descuento
+        fields = ['id', 'interesado_id', 'status', 'codigo']
+        read_only_fields = ['interesado_id']
+
+    def create(self, data):
+        interesado_id = Interesado.objects.create(**data['interesado_id'])
+        status = data['status']
+        codigo = shortuuid.ShortUUID().random(length=8)
+        return Descuento.objects.create(interesado_id = interesado_id, status = status, codigo = codigo)

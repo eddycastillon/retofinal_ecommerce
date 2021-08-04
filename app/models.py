@@ -1,5 +1,7 @@
+from rest_framework.fields import ReadOnlyField
+import shortuuid
 from django.db import models
-from django.db.models.fields import AutoField
+from django.db.models.fields import AutoField, UUIDField
 from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
@@ -141,5 +143,46 @@ class Beneficio(models.Model):
         verbose_name_plural = 'Beneficios'
         ordering = ['id']
 
+
+
+class Interesado(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombres = models.CharField(max_length=255)
+    apellido_paterno = models.CharField(max_length=255)
+    apellido_materno = models.CharField(max_length=255)
+    apellido_materno = models.CharField(max_length=255)
+    celular = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.nombres}'
+
+    class Meta:
+        db_table = 'interesados'
+        verbose_name = 'Interesado'
+        verbose_name_plural = 'Interesados'
+        ordering = ['id']
+
+
+class Descuento(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    #codigo = models.CharField(max_length=255)
+    codigo = models.CharField(unique=True,  max_length=10, editable=False)
+    status = models.BooleanField(default=True)
+    interesado_id = ForeignKey(Interesado, on_delete=models.CASCADE, null=True)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.codigo}'
+
+    class Meta:
+        db_table = 'descuentos'
+        verbose_name = 'Descuento'
+        verbose_name_plural = 'Descuentos'
+        ordering = ['id']
 
 
