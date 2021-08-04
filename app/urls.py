@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework import urlpatterns
 from rest_framework.routers import DefaultRouter
 from .views import BeneficioViewSet, CategoriaViewSet, CursoViewSet, HorarioCursoViewSet, HorarioViewSet, SemanaViewSet, SesionCursoViewSet, SesionViewSet,\
-    InteresadoViewSet, DescuentoViewSet
+    InteresadoViewSet, DescuentoViewSet, CursoDetalleViewSet
 
 router = DefaultRouter()
 router.register('categorias', CategoriaViewSet)
@@ -15,7 +15,7 @@ router.register('horario-cursos', HorarioCursoViewSet)
 router.register('beneficios', BeneficioViewSet)
 router.register('interesados', InteresadoViewSet)
 router.register('descuentos', DescuentoViewSet)
-
+router.register('curso-detalle', CursoDetalleViewSet)
 
 urlpatterns = [
     path('', include(router.urls))

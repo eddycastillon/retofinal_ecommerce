@@ -1,6 +1,6 @@
 from re import search
 from django.contrib import admin
-from .models import Beneficio, Categoria, Curso, Sesion, SesionCurso, Semana, Horario, HorarioCurso,\
+from .models import Beneficio, Categoria, Curso, CursoDetalle, Sesion, SesionCurso, Semana, Horario, HorarioCurso,\
     Interesado, Descuento
 # Register your models here.
 
@@ -14,6 +14,11 @@ class CategoriaAdmin(admin.ModelAdmin):
 class CursoAdmin(admin.ModelAdmin):
     list_display = ['id', 'curso', 'duracion', 'precio', 'id_categoria', 'url']
     search_fields = ['curso']
+
+@admin.register(CursoDetalle)
+class CursoDetalleAdmin(admin.ModelAdmin):
+    list_display = ['id', 'curso_id', 'titulo', 'pregunta', 'descripcion']
+    search_fields = ['curso-detalle']
 
 @admin.register(Sesion)
 class SesionAdmin(admin.ModelAdmin):
