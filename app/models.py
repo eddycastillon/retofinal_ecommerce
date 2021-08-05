@@ -41,6 +41,22 @@ class Curso(models.Model):
         verbose_name_plural = 'Cursos'
         ordering = ['id']
 
+class CursoDetalle(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    titulo = models.CharField(max_length=255)
+    pregunta  = models.CharField(max_length=255)
+    descripcion = models.TextField()
+    curso_id = ForeignKey(Curso, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'{self.titulo}'
+
+    class Meta:
+        db_table = 'curso_detalle'
+        verbose_name = 'Curso Detalle'
+        verbose_name_plural = 'Cursos Detalles'
+        ordering = ['id']
 
 class Horario(models.Model):
     id = models.AutoField(primary_key=True)

@@ -3,7 +3,7 @@ import shortuuid
 from django.db.models import fields
 from rest_framework import serializers
 from .models import Beneficio, Categoria, Curso, Descuento, Horario, HorarioCurso, Interesado, Semana, Sesion, SesionCurso, \
-     Interesado, Descuento
+     Interesado, Descuento, CursoDetalle
 
 
 
@@ -20,6 +20,12 @@ class CursoSerializer(serializers.ModelSerializer):
         model = Curso
         fields = ['id', 'curso', 'duracion', 'precio', 'id_categoria', 'url']
 
+class CursoDetalleSerializer(serializers.ModelSerializer):
+    curso_id = CursoSerializer(many=False)
+
+    class Meta:
+        model = CursoDetalle
+        fields = '__all__'
 
 class SesionSerializer(serializers.ModelSerializer):
 

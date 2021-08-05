@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import Beneficio, Categoria, Curso, Descuento, Interesado, Semana, Sesion, Horario, HorarioCurso, SesionCurso
-from .serializers import BeneficioSerializer, CategoriaSerializer, CursoSerializer, DescuentoSerializer, InteresadoSerializer, SemanaSerializer, SesionSerializer, \
+from .models import Beneficio, Categoria, Curso, CursoDetalle, Descuento, Interesado, Semana, Sesion, Horario, HorarioCurso, SesionCurso
+from .serializers import BeneficioSerializer, CategoriaSerializer, CursoDetalleSerializer, CursoSerializer, DescuentoSerializer, InteresadoSerializer, SemanaSerializer, SesionSerializer, \
     HorarioSerializer, HorarioCursoSerializer, SesionCursoSerializer,\
-        DescuentoSerializer, InteresadoSerializer
+        DescuentoSerializer, InteresadoSerializer, CursoDetalleSerializer
 
 # Create your views here.
 
@@ -14,6 +14,10 @@ class CategoriaViewSet(viewsets.ModelViewSet):
 class CursoViewSet(viewsets.ModelViewSet):
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
+
+class CursoDetalleViewSet(viewsets.ModelViewSet):
+    queryset = CursoDetalle.objects.all()
+    serializer_class = CursoDetalleSerializer
 
 class SesionViewSet(viewsets.ModelViewSet):
     queryset = Sesion.objects.all()
