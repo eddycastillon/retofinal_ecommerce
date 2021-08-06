@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.response import Response
 from .models import Beneficio, Categoria, Curso, CursoDetalle, Descuento, Interesado, Semana, Sesion, Horario, HorarioCurso, SesionCurso
 from .serializers import BeneficioSerializer, CategoriaSerializer, CursoDetalleSerializer, CursoSerializer, DescuentoSerializer, InteresadoSerializer, SemanaSerializer, SesionSerializer, \
     HorarioSerializer, HorarioCursoSerializer, SesionCursoSerializer,\
@@ -14,10 +15,18 @@ class CategoriaViewSet(viewsets.ModelViewSet):
 class CursoViewSet(viewsets.ModelViewSet):
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
-
+    
 class CursoDetalleViewSet(viewsets.ModelViewSet):
     queryset = CursoDetalle.objects.all()
     serializer_class = CursoDetalleSerializer
+
+    def retrieve(self, request, pk=None):
+        curso_id  = self.kwargs['pk']
+        curso = Curso.objects.filter(id = curso_id).first()
+        queryset = CursoDetalle.objects.filter(curso_id = curso.id).first()
+        serializer_class = CursoDetalleSerializer(queryset)
+        return Response(serializer_class.data)
+     
 
 class SesionViewSet(viewsets.ModelViewSet):
     queryset = Sesion.objects.all()
