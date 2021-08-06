@@ -78,11 +78,13 @@ class BeneficioSerializer(serializers.ModelSerializer):
         model = Beneficio
         fields = ['id', 'beneficio']
 
-class InteresadoSerializer(serializers.ModelSerializer):
+class InteresadoSerializer(serializers.Serializer):
     
     class Meta:
         model = Interesado
         fields = ['id', 'nombres', 'apellido_paterno', 'apellido_materno', 'celular', 'email']
+
+    
 
 class DescuentoSerializer(serializers.ModelSerializer):
     

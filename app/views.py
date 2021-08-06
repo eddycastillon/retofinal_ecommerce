@@ -45,8 +45,8 @@ class BeneficioViewSet(viewsets.ModelViewSet):
 
 class InteresadoViewSet(viewsets.ModelViewSet):
     queryset = Interesado.objects.all()
-    serializer_class = InteresadoSerializer
-
+    serializer_class = InteresadoSerializer        
+ 
 class DescuentoViewSet(viewsets.ModelViewSet):
     queryset = Descuento.objects.all()
-    serializer_class = DescuentoSerializer
+    serializer_class = DescuentoSerializer 
