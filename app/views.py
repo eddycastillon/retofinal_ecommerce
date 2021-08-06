@@ -22,8 +22,7 @@ class CursoDetalleViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         curso_id  = self.kwargs['pk']
-        curso = Curso.objects.filter(id = curso_id).first()
-        queryset = CursoDetalle.objects.filter(curso_id = curso.id).first()
+        queryset = CursoDetalle.objects.filter(curso_id = curso_id).first()
         serializer_class = CursoDetalleSerializer(queryset)
         return Response(serializer_class.data)
      
