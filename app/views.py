@@ -50,8 +50,8 @@ class HorarioCursoViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         id_curso  = self.kwargs['pk']
         queryset = HorarioCurso.objects.filter(id_curso = id_curso).all()
-        serializer_class = HorarioCursoSerializer(queryset)
-        print(queryset)
+        serializer_class = HorarioCursoSerializer(queryset, many=True)
+        
         return Response(serializer_class.data)
         
 
