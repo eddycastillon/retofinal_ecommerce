@@ -64,13 +64,13 @@ class HorarioSerializer(serializers.ModelSerializer):
 
 class HorarioCursoSerializer(serializers.ModelSerializer):
 
-    id_horario = HorarioSerializer(many=False)
-    id_curso = CursoSerializer(many=False)
+    id_horario = HorarioSerializer(many=True)
+    id_curso = CursoSerializer(many=True)
 
 
     class Meta:
         model = HorarioCurso
-        fields = ['id', 'id_curso', 'id_horario']
+        fields = '__all__'
 
 class BeneficioSerializer(serializers.ModelSerializer):
 
