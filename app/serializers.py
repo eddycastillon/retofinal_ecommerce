@@ -2,7 +2,7 @@ from rest_framework.fields import ReadOnlyField
 import shortuuid
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Beneficio, Categoria, Curso, Descuento, Horario, HorarioCurso, Interesado, Semana, Sesion, SesionCurso, \
+from .models import Beneficio, Categoria, Curso, Descuento, Horario, HorarioCurso, Semana, Sesion, SesionCurso, \
      Interesado, Descuento, CursoDetalle
 
 
@@ -78,7 +78,7 @@ class BeneficioSerializer(serializers.ModelSerializer):
         model = Beneficio
         fields = ['id', 'beneficio']
 
-class InteresadoSerializer(serializers.Serializer):
+class InteresadoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Interesado
@@ -93,7 +93,7 @@ class DescuentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Descuento
         fields = ['id', 'interesado_id', 'status', 'codigo']
-        read_only_fields = ['interesado_id']
+        #read_only_fields = ['interesado_id']
 
     def create(self, data):
         interesado_id = Interesado.objects.create(**data['interesado_id'])
