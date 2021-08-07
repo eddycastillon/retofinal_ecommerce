@@ -23,7 +23,7 @@ class CursoDetalleViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         curso_id  = self.kwargs['pk']
         queryset = CursoDetalle.objects.filter(curso_id = curso_id).first()
-        serializer_class = CursoDetalleSerializer(queryset)
+        serializer_class = CursoDetalleSerializer(queryset, many=True)
         return Response(serializer_class.data)
      
 
@@ -35,9 +35,21 @@ class SesionCursoViewSet(viewsets.ModelViewSet):
     queryset = SesionCurso.objects.all()
     serializer_class = SesionCursoSerializer
 
+    def retrieve(self, request, pk=None):
+        id_curso  = self.kwargs['pk']
+        queryset = SesionCurso.objects.filter(id_curso = id_curso).all()
+        serializer_class = SesionCursoSerializer(queryset, many=True)
+        return Response(serializer_class.data)
+
 class SemanaViewSet(viewsets.ModelViewSet):
     queryset = Semana.objects.all()
     serializer_class = SemanaSerializer
+
+    def retrieve(self, request, pk=None):
+        id_sesioncurso  = self.kwargs['pk']
+        queryset = Semana.objects.filter(id_sesioncurso = id_sesioncurso).all()
+        serializer_class = SemanaSerializer(queryset, many=True)
+        return Response(serializer_class.data)
 
 class HorarioViewSet(viewsets.ModelViewSet):
     queryset = Horario.objects.all()
@@ -46,6 +58,12 @@ class HorarioViewSet(viewsets.ModelViewSet):
 class HorarioCursoViewSet(viewsets.ModelViewSet):
     queryset = HorarioCurso.objects.all()
     serializer_class = HorarioCursoSerializer
+
+    def retrieve(self, request, pk=None):
+        id_curso  = self.kwargs['pk']
+        queryset = HorarioCurso.objects.filter(id_curso = id_curso).all()
+        serializer_class = HorarioCursoSerializer(queryset, many=True)
+        return Response(serializer_class.data)
 
 class BeneficioViewSet(viewsets.ModelViewSet):
     queryset = Beneficio.objects.all()
