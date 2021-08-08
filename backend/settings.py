@@ -60,7 +60,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'authentication',
     'app',
-    'corsheaders'
+    'corsheaders',
+    'commerce'
 ]
 
 # User Model
