@@ -100,3 +100,5 @@ class DescuentoSerializer(serializers.ModelSerializer):
         status = data['status']
         codigo = shortuuid.ShortUUID().random(length=8)
         return Descuento.objects.create(interesado_id = interesado_id, status = status, codigo = codigo)
+
+

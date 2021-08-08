@@ -1,4 +1,3 @@
-from re import search
 from django.contrib import admin
 from .models import Beneficio, Categoria, Curso, CursoDetalle, Sesion, SesionCurso, Semana, Horario, HorarioCurso,\
     Interesado, Descuento
