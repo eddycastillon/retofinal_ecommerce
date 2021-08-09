@@ -28,10 +28,10 @@ class Payment(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         body_unicode = request.body.decode('utf-8')
         body = loads(body_unicode)
-        print(body)
+        #print(body)
         order_id = body['orderID']
-        print("00000000000000000")
-        print(order_id)
+        #print("00000000000000000")
+        #print(order_id)
 
         shopping_cart = ShoppingCar.objects.filter(user=body['user']).all()
         total_price = round(sum(round(d.price * d.quantity, 2) for d in shopping_cart), 2)
@@ -39,22 +39,23 @@ class Payment(generics.GenericAPIView):
         order = Order().get_order(order_id)
         order_price = float(order.result.purchase_units[0].amount.value)
 
-        #if order_price == total_price:
-        if order_price == order_price:
+        user = User.objects.get(id=body['user'])
+        
+        if order_price == total_price:
             return self._order_capture(
-                order_id, order_price, request, shopping_cart
+                order_id, order_price, request, shopping_cart, user
             )
 
         return JsonResponse({
             'error': 'Sucedio un error al realizar el cobro'
         })
 
-    def _order_capture(self, order_id, order_price, request, shopping_cart):
-        #order_capture = Order().capture_order(order_id, debug=True)
+    def _order_capture(self, order_id, order_price, request, shopping_cart, user):
+        order_capture = Order().capture_order(order_id, debug=True)
 
         code = f'PC-{random_code(5)}'
-        user = User.objects.get(email='admin@gmail.com')
-        print(user)
+        
+    
         order = OrderModel.objects.create(price=order_price, user=user, code=code)
         if order:
             order_id = order.pk
@@ -63,10 +64,8 @@ class Payment(generics.GenericAPIView):
             ShoppingCar.objects.filter(user=user).delete()
 
         data = {
-            'id': order_id,
-            #'id': order_capture.result.id,
-            'name': order_id
-            #'name': order_capture.result.payer.name.given_name
+            'id': order_capture.result.id,
+            'name': order_capture.result.payer.name.given_name
         }
         
 
@@ -78,19 +77,20 @@ class ShoppingCarViewSet(generics.GenericAPIView):
     serializer_class = ShoppingCarSerializer
 
     def post(self, request, *args, **kwargs):
-        body = request.POST
-        curso_id = body['product_id']
+        body = request.data
+        curso_id = body['product']
         product_query = Curso.objects.get(id=curso_id)
         serializer = self.serializer_class(data=request.data)
+        user = User.objects.get(id=body['user'])
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         if product_query:
-            price = product_query.price
+            price = product_query.precio
             try:
-                shopping = ShoppingCar.objects.get(product_id=curso_id, user=request.user)
+                shopping = ShoppingCar.objects.get(product_id=curso_id, user=user)
                 print('curso ya se encuentra en el carrito')
             except ShoppingCar.DoesNotExist:
-                shopping = ShoppingCar(product_id=curso_id, price=price, quantity=1, user=request.user)
+                shopping = ShoppingCar(product_id=curso_id, price=price, quantity=1, user=user)
                 shopping.save()
                 print('se agrego el curso al carrito')
         

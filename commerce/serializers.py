@@ -34,6 +34,9 @@ class ShoppingCarSerializer(serializers.ModelSerializer):
 class UpGradeSerializer(serializers.Serializer):
 
     cantidad = serializers.IntegerField()
+    class Meta:
+        model = ShoppingCar 
+        fields = ['id', 'cantidad']
 
     
 
