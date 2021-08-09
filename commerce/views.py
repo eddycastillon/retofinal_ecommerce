@@ -1,4 +1,4 @@
-from commerce.serialzers import DownGradeSerializer, ShoppingCarSerializer, UpGradeSerializer
+from commerce.serializers import DownGradeSerializer, ShoppingCarSerializer, UpGradeSerializer
 from django.shortcuts import render
 
 from rest_framework import generics
@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from authentication.models import  User 
 
-from .models import  ShoppingCart, Order as OrderModel, OrderDetail
+from .models import  ShoppingCar, Order as OrderModel, OrderDetail
 from app.models import Curso as Product
 from .serializers import OrderSerializer
 from .paypal import Order
@@ -16,7 +16,6 @@ from django.http.response import JsonResponse
 
 from rest_framework.response import Response
 from rest_framework import serializers, viewsets, generics
-from .models import ShoppingCar
 from app.models import Curso
 
 
@@ -34,7 +33,7 @@ class Payment(generics.GenericAPIView):
         print("00000000000000000")
         print(order_id)
 
-        shopping_cart = ShoppingCart.objects.filter(user=body['user']).all()
+        shopping_cart = ShoppingCar.objects.filter(user=body['user']).all()
         total_price = round(sum(round(d.price * d.quantity, 2) for d in shopping_cart), 2)
 
         order = Order().get_order(order_id)
@@ -61,7 +60,7 @@ class Payment(generics.GenericAPIView):
             order_id = order.pk
             for value in shopping_cart:
                 OrderDetail.objects.create(order_id=order_id, product_id=value.product.id, quantity=value.quantity, price=value.price)
-            ShoppingCart.objects.filter(user=user).delete()
+            ShoppingCar.objects.filter(user=user).delete()
 
         data = {
             'id': order_id,
@@ -73,11 +72,6 @@ class Payment(generics.GenericAPIView):
 
         return JsonResponse(data)
 
-
-# Create your views here.
-
-#@api_view(['POST'])
-#def post(self, request, *args, **kwargs):
 
 class ShoppingCarViewSet(generics.GenericAPIView):
 
@@ -106,7 +100,7 @@ class ShoppingCarViewSet(generics.GenericAPIView):
 class QuantityUpgradeView(generics.GenericAPIView):
 
     serializer_class = UpGradeSerializer
-#cantidad = serializer.data
+
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         shopping_car = ShoppingCar.objects.filter(id=1).first()
