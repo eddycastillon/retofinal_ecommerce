@@ -10,6 +10,9 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'price']  
         #fields = '__all__'
 
+    def to_representation(self, instance):
+        return {'id' :instance.id, 'price': instance.price, 'code': instance.code, 'user': instance.user_id}
+
 class OrderDetailSerializer(serializers.ModelSerializer):
     
     class Meta:

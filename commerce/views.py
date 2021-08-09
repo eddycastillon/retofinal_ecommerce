@@ -131,3 +131,12 @@ class QuantityDowngradeView(generics.GenericAPIView):
                 shopping_car.save()
             elif shopping_car.quantity == 1:
                 shopping_car.delete()
+
+
+class OrderView(generics.GenericAPIView):
+   
+    serializer_class = OrderSerializer
+    def get(self,  request, format=None):
+        queryset = OrderModel.objects.all()
+        serializer = OrderSerializer( queryset, many=True)
+        return Response(serializer.data)
