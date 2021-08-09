@@ -4,7 +4,7 @@ from authentication.models import User
 # Create your models here.
 
 
-class ShoppingCart(models.Model):
+class ShoppingCar(models.Model):
     id = models.AutoField(primary_key=True)
     product = models.ForeignKey(Curso, null=True, blank=True, on_delete=models.SET_NULL)
     quantity = models.IntegerField(default=1)
@@ -14,9 +14,9 @@ class ShoppingCart(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'shopping_carts'
-        verbose_name = 'Shopping Cart'
-        verbose_name_plural = 'Shopping Carts'
+        db_table = 'shopping_cars'
+        verbose_name = 'Shopping Car'
+        verbose_name_plural = 'Shopping Cars'
 
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
