@@ -17,7 +17,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = OrderDetail
-        fields = ['id', 'order', 'curso', 'quantity', 'price']
+        fields = ['id', 'order', 'product', 'quantity', 'price']
 
 
 class ShoppingCarSerializer(serializers.ModelSerializer):

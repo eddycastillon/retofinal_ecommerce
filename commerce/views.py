@@ -8,7 +8,7 @@ from authentication.models import  User
 
 from .models import  ShoppingCar, Order as OrderModel, OrderDetail
 from app.models import Curso as Product
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, OrderDetailSerializer
 from .paypal import Order
 from .utils import random_code
 from json import loads
@@ -139,4 +139,13 @@ class OrderView(generics.GenericAPIView):
     def get(self,  request, format=None):
         queryset = OrderModel.objects.all()
         serializer = OrderSerializer( queryset, many=True)
+        return Response(serializer.data)
+
+
+class OrderDetailView(generics.GenericAPIView):
+   
+    serializer_class = OrderDetailSerializer
+    def get(self,  request, format=None):
+        queryset = OrderDetail.objects.all()
+        serializer = OrderDetailSerializer( queryset, many=True)
         return Response(serializer.data)
